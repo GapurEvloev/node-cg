@@ -32,17 +32,22 @@ const server = http.createServer((req, res) => {
             console.log({chunk});
             body.push(chunk);
         });
-        req.on('end', () => {
+        return req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
-            fs.writeFileSync('message.txt', message);
+            fs.writeFile('message.txt', message, (err) => {
+                if (err) {
+                    res.statusCode = 500;
+                    res.write('Error writing file');
+                    console.error(err);
+                    return res.end();
+                }
+                res.statusCode = 302;
+                res.setHeader('Location', '/');
+                console.log('File written successfully');
+                return res.end();
+            });
         });
-        // res.writeHead(302, {
-        //     'Location': '/'
-        // });
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        return res.end();
     };
 
     res.write(`
