@@ -6,5 +6,5 @@ const port = 3000;
 const server = http.createServer(requestHandler);
 
 server.listen(port, () => {
-    console.log('Server started on http://localhost:3000');
+    console.log(`Server started on http://localhost:${port}`);
 });
