@@ -2,6 +2,8 @@ import path from 'path';
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 
+import rootDir from './util/path';
+
 import { admin, shop } from './routes';
 
 const app = express();
@@ -14,7 +16,7 @@ app.use(shop);
 
 // error handling middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
 });
 
 app.listen(port, () => {
