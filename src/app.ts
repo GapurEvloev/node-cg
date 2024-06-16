@@ -8,7 +8,7 @@ const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(admin);
+app.use('/admin', admin);
 app.use(shop);
 
 // error handling middleware
