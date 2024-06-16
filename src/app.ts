@@ -1,3 +1,4 @@
+import path from 'path';
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 
@@ -13,7 +14,7 @@ app.use(shop);
 
 // error handling middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(404).send('<h1>Page not found</h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
 app.listen(port, () => {
