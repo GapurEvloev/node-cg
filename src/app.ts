@@ -10,6 +10,7 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(rootDir, '../public')));
 
 app.use('/admin', admin);
 app.use(shop);
