@@ -2,7 +2,11 @@ import path from 'path';
 import express from 'express';
 
 import rootDir from '../util/path';
+import { Product } from '../types/product';
+
 const router = express.Router();
+
+const products: Product[] = [];
 
 // /admin/add-product => GET
 router.get('/add-product', (req, res, next) => {
@@ -11,9 +15,15 @@ router.get('/add-product', (req, res, next) => {
 
 // /admin/product => POST
 router.post('/add-product', (req, res, next) => {
-    console.log('Product added');
-    console.log(req.body);
+    const newProduct: Product = {
+        title: req.body.title,
+        price: parseFloat(req.body.price),
+    };
+    products.push(newProduct);
     res.redirect('/');
 });
 
-export default router;
+export { 
+    products,
+    router as default
+};
