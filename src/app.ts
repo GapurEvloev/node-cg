@@ -10,7 +10,7 @@ import { admin, shop } from './routes';
 const app = express();
 const port = 3000;
 
-app.engine('hbs', exphbs({ extname: 'hbs' }));
+app.engine('hbs', exphbs({ extname: 'hbs', defaultLayout: 'main-layout', layoutsDir: path.join(rootDir, 'views/layouts') }));
 app.set('view engine', 'hbs');
 // app.set('view engine', 'pug');
 app.set('views', path.join(rootDir, 'views'));
