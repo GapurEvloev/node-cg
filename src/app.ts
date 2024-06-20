@@ -1,6 +1,7 @@
 import path from 'path';
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
+const exphbs = require('express-handlebars');
 
 import rootDir from './util/path';
 
@@ -9,7 +10,9 @@ import { admin, shop } from './routes';
 const app = express();
 const port = 3000;
 
-app.set('view engine', 'pug');
+app.engine('hbs', exphbs({ extname: 'hbs' }));
+app.set('view engine', 'hbs');
+// app.set('view engine', 'pug');
 app.set('views', path.join(rootDir, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: false }));

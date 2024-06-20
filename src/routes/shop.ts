@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
         products,
         pageTitle: 'MyShop',
         path: '/',
+        hasProducts: products.length > 0,
     });
 });
 
