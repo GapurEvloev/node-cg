@@ -9,6 +9,9 @@ import { admin, shop } from './routes';
 const app = express();
 const port = 3000;
 
+app.set('view engine', 'pug');
+app.set('views', path.join(rootDir, 'views'));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, '../public')));
 
@@ -17,7 +20,10 @@ app.use(shop);
 
 // error handling middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
+    // sendFile(path.join(rootDir, 'views', '404.html'));
+    res.status(404).render('404', {
+        pageTitle: 'Page Not Found!',
+    });
 });
 
 app.listen(port, () => {
