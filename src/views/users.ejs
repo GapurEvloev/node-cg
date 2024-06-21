@@ -1,0 +1,27 @@
+    <%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('./includes/navigation.ejs') %>
+
+    <main>
+        <h1><%= pageTitle %></h1>
+        <% if (hasUsers) { %>
+            <p>List of all the users...</p>
+            <div class="grid">
+                <ul>
+                    <% for (let user of users) { %>
+                        <li>
+                            <h1 class="product__title"><%= user.name %></h1>
+                            <h3 class="product__price">$<%= user.age %></h3>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        <% } else { %>
+            <p>No users found.</p>
+        <% } %>
+    </main>
+<%- include('./includes/end.ejs') %>

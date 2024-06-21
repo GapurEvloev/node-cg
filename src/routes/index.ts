@@ -1,2 +1,2 @@
-export { default as admin } from './admin';
-export { default as shop } from './shop';
+export { default as users } from './users';
+export { default as main } from './main';
