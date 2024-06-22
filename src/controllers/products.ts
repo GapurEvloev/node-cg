@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { Product } from '../types/product';
-
-export const products: Product[] = [];
+import { Product as ProductType } from '../types/product';
+import { Product } from '../models/product';
 
 export const getAddProduct = (req: Request, res: Response, next: NextFunction) => {
     res.render('add-product', {
@@ -14,15 +13,13 @@ export const getAddProduct = (req: Request, res: Response, next: NextFunction) =
 }
 
 export const postAddProduct = (req: Request, res: Response, next: NextFunction) => {
-    const newProduct: Product = {
-        title: req.body.title,
-        price: parseFloat(req.body.price),
-    };
-    products.push(newProduct);
+    const newProduct: ProductType = new Product(req.body.title, req.body.price);
+    newProduct.save();
     res.redirect('/');
 }
 
 export const getProducts = (req: Request, res: Response, next: NextFunction) => {
+    const products = Product.fetchAll();
     res.render('shop', {
         products,
         pageTitle: 'MyShop',
