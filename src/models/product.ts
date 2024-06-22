@@ -4,6 +4,16 @@ import { Product as ProductType } from "../types/product";
 import rootDir, { appDir } from "../util/path";
 
 const products: ProductType[] = [];
+const filePath = path.join(appDir, "public", "data", "products.json");
+
+const getProductsFromFile = (callback: (products: ProductType[]) => void) => {
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            return callback([])
+        }
+        callback(JSON.parse(data.toString()));
+    });
+}
 
 export class Product {
     title: string;
@@ -15,15 +25,7 @@ export class Product {
     }
 
     save() {
-        // path to data file
-        const filePath = path.join(appDir, "public", "data", "products.json");
-        
-        // store products in a json file
-        fs.readFile(filePath, (err, data) => {
-            let products = [];
-            if (!err) {
-                products = JSON.parse(data.toString());
-            }
+        getProductsFromFile((products: ProductType[]) => {
             products.push(this);
             fs.writeFile(filePath, JSON.stringify(products), (err) => {
                 console.log(err);
@@ -32,12 +34,6 @@ export class Product {
     }
 
     static fetchAll(callback: (products: ProductType[]) => void) {
-        const filePath = path.join(appDir, "public", "data", "products.json");
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                callback([])
-            }
-            callback(JSON.parse(data.toString()));
-        });
+        getProductsFromFile(callback);
     }
 }
